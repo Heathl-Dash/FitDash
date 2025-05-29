@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'fitCore.apps.FitcoreConfig',
     'rest_framework',
     'simple_history',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
