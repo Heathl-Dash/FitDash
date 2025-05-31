@@ -8,7 +8,6 @@ class ToDoListView(ListAPIView):
 
     def get_queryset(self):
         user_id=self.request.user.id
-        print(user_id)
         return ToDo.objects.filter(user_id=user_id)
         
     
