@@ -1,5 +1,12 @@
-from django.urls import path
-from .views import ToDoListView
+from django.urls import path, include
+from .views import ToDoViewSet, HabitViewSet
+from rest_framework.routers import DefaultRouter
+
+router = DefaultRouter()
+
+router.register(r'todo', ToDoViewSet, basename='todo')
+router.register(r'habit', HabitViewSet, basename='habit')
+
 urlpatterns = [
-    path('todo/list',ToDoListView.as_view(),name='todo-list')
+    path('', include(router.urls)),
 ]
