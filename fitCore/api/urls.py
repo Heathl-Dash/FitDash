@@ -9,11 +9,11 @@ router.register(r'habit', HabitViewSet, basename='habit')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('habits/<int:pk>/add-positive-counter/', 
+    path('habit/<int:pk>/add-positive-counter/', 
          HabitAddPositiveCountView.as_view(), 
          name="habit-add-positive-counter"
     ),
-    path('habits/<int:pk>/add-negative-counter/', 
+    path('habit/<int:pk>/add-negative-counter/', 
          HabitAddNegativeCountView.as_view(), 
          name="habit-add-negative-counter"
     ),
