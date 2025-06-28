@@ -7,8 +7,9 @@ RABBITMQ_DEFAULT_HOST = os.getenv("RABBITMQ_DEFAULT_HOST")
 RABBITMQ_DEFAULT_USER = os.getenv("RABBITMQ_DEFAULT_USER")
 RABBITMQ_DEFAULT_PASS = os.getenv("RABBITMQ_DEFAULT_PASS")
 RABBITMQ_DEFAULT_VHOST = os.getenv("RABBITMQ_DEFAULT_VHOST")
-RABBITMQ_DEFAULT_QUEUE = os.getenv("RABBITMQ_DEFAULT_PORT")
-RABBITMQ_QUEUE=os.getenv("RABBITMQ_QUEUE")
+RABBITMQ_QUEUE_NAME=os.getenv("RABBITMQ_QUEUE_NAME")
+RABBITMQ_EXCHANGE_NAME=os.getenv("RABBITMQ_EXCHANGE_NAME")
+RABBITMQ_EXCHANGE_TYPE=os.getenv("RABBITMQ_EXCHANGE_TYPE")
 
 os.environ.setdefault("DJANGOSETTINGS_MODULE",'fitDash.settings')
 django.setup()
@@ -29,10 +30,15 @@ def __get_connection_and_channel():
 
 
 def start_delete_user_objects():
-    conn,chan=__get_connection_and_channel()
-    chan.queue_declare(RABBITMQ_QUEUE,durable=True)
+    _,chan=__get_connection_and_channel()
+
+    chan.exchange_declare(exchange=RABBITMQ_EXCHANGE_NAME, exchange_type=RABBITMQ_EXCHANGE_TYPE)
+
+    chan.queue_declare(RABBITMQ_QUEUE_NAME,durable=True)
+    chan.queue_bind(exchange=RABBITMQ_EXCHANGE_NAME,queue=RABBITMQ_QUEUE_NAME)
 
     def callback(ch,method,properties,body):
+        print('mensagem recebida')
         try:
             data=json.loads(body)
             user_id=data.get("user_id")
@@ -42,7 +48,7 @@ def start_delete_user_objects():
         except Exception as e:
             print(f'Erro: {e}')
     chan.basic_consume(
-        queue=RABBITMQ_QUEUE,
+        queue=RABBITMQ_QUEUE_NAME,
         on_message_callback=callback,
         auto_ack=True
     )

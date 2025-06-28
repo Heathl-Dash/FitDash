@@ -13,3 +13,6 @@ RABBITMQ_DEFAULT_USER=rabbit-username
 RABBITMQ_DEFAULT_PASS=rabbit-password
 RABBITMQ_DEFAULT_VHOST=/something
 RABBITMQ_DEFAULT_PORT=rabbit amqp port
+RABBITMQ_QUEUE_NAME=a name for the fit queue
+RABBITMQ_EXCHANGE_NAME=the name of the exchange for binding
+RABBITMQ_EXCHANGE_TYPE=fexchange type
