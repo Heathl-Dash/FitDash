@@ -1,0 +1,15 @@
+POSTGRES_USER= db username
+POSTGRES_PASSWORD= db password
+POSTGRES_DB= db name
+DB_ENGINE=django db engine
+DB_PORT=port number
+SECRETJWT=secret key value
+ACCESS_TIME=time in int minutes
+REFRESH_TIME=time in int days
+DEBUG=Debug boolean
+
+RABBITMQ_DEFAULT_HOST=rabbit container name
+RABBITMQ_DEFAULT_USER=rabbit-username
+RABBITMQ_DEFAULT_PASS=rabbit-password
+RABBITMQ_DEFAULT_VHOST=/something
+RABBITMQ_DEFAULT_PORT=rabbit amqp port
