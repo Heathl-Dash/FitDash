@@ -8,7 +8,7 @@ docker swarm init
 
 criar network externa de overlay
 ```bash
-docker network create --driver overlay --attachable profilesdashboard-rede
+docker network create --driver overlay --attachable fitdashboard-rede
 ```
 
 ## docker build
