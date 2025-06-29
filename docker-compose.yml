@@ -48,6 +48,7 @@ services:
 
 networks:
   fitdashboard-rede:
-    driver: bridge
+    external: true
+    name: fitdashboard-rede
   rabbit-MQ-extern-network:
     external: true
