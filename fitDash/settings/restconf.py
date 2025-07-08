@@ -8,3 +8,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ),
 }
+
+CORS_ORIGIN_ALLOW_ALL=True

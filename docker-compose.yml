@@ -2,7 +2,8 @@ version: '3.7'
 
 services:
   fitdashboard-db:
-    image: postgres:17.5
+    build: 
+      context: ./dbDocker
     env_file: .env
     ports:
       - 5434:5432
@@ -13,11 +14,15 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    volumes:
+      - ./backups:/backups 
+    environment:
+      - TZ=America/Sao_Paulo
 
 
   django_fitdashboard:
     build: .
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
     env_file: .env
     environment:
       - DB_HOST=fitdashboard-db
@@ -37,9 +42,13 @@ services:
       - fitdashboard-db
     networks:
       - fitdashboard-rede
+      - rabbit-MQ-extern-network
     
     
 
 networks:
   fitdashboard-rede:
-    driver: bridge
+    external: true
+    name: fitdashboard-rede
+  rabbit-MQ-extern-network:
+    external: true

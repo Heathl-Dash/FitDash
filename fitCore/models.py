@@ -1,4 +1,5 @@
 from django.db import models
+from rest_framework.exceptions import ValidationError
 
 class ToDoBase(models.Model):
     title=models.CharField(max_length=50)
@@ -27,3 +28,8 @@ class Habit(ToDoBase):
 
     def __str__(self):
         return self.title
+    
+    def save(self, *args, **kwargs):
+        if not self.positive and not self.negative:
+            raise ValidationError("Pelo menos um dos campos 'Positivo' ou 'Negativo' deve ser Verdadeiro")
+        super().save(*args, **kwargs)
