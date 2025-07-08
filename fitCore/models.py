@@ -1,5 +1,4 @@
 from django.db import models
-from datetime import datetime
 from rest_framework.exceptions import ValidationError
 
 class ToDoBase(models.Model):
