@@ -12,8 +12,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from .databaseconf import DATABASES
-from .restconf import REST_FRAMEWORK
+from .restconf import REST_FRAMEWORK,CORS_ORIGIN_ALLOW_ALL
 from.simplejwtconf import SIMPLE_JWT
+from .instaledappsconf import INSTALLED_APPS
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -33,21 +34,10 @@ ALLOWED_HOSTS = []
 
 # Application definition
 
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'fitCore.apps.FitcoreConfig',
-    'rest_framework',
-    'simple_history',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-]
+
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
