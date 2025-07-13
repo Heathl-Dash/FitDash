@@ -14,7 +14,7 @@ router.register(r'todo', ToDoViewSet, basename='todo')
 router.register(r'habit', HabitViewSet, basename='habit')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    path('fit/', include(router.urls)),
     path('habit/<int:pk>/add-positive-counter/', 
          HabitAddPositiveCountView.as_view(), 
          name="habit-add-positive-counter"
