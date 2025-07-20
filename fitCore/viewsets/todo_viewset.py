@@ -49,7 +49,7 @@ class ToDoViewSet(ModelViewSet):
             )
     
     @action(detail=True,methods=['patch'])
-    def todo_toggle(self,request,pk=None):
+    def done_toggle(self,request,pk=None):
         instance = self.get_object()
         instance.done=not instance.done
         instance.save()

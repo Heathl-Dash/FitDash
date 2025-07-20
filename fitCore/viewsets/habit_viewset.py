@@ -19,6 +19,7 @@ class HabitViewSet(ModelViewSet):
         if obj.user_id != self.request.user.id:
             raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
         return obj
+    
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.id)
 
@@ -44,35 +45,27 @@ class HabitViewSet(ModelViewSet):
                 status=status.HTTP_400_BAD_REQUEST
             )
 
-
-class HabitAddPositiveCountView(UpdateAPIView):
-    serializer_class = HabitSerializer
-    queryset = Habit.objects.all()
-
-    def perform_update(self, serializer):
-        instance = self.get_object()
-        
-        if instance.user_id != self.request.user.id:
-            raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
-        
-        if instance.positive == False:
+    @action(detail=True,methods=['patch'])
+    def add_positive_counter(self,request,pk=None):
+        obj=self.get_object()
+        serializer=self.get_serializer(obj)
+        if obj.positive == False:
             raise ValidationError("Não é possível adicionar, pois o hábito é negativo.")
+        obj.positive_count=obj.positive_count + 1
+        obj.save()
 
-        serializer.save(positive_count=instance.positive_count + 1)
+        serializer=self.get_serializer(obj)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
-
-class HabitAddNegativeCountView(UpdateAPIView):
-    serializer_class = HabitSerializer
-    queryset = Habit.objects.all()
-
-    def perform_update(self, serializer):
-        instance = self.get_object()
-        
-        if instance.user_id != self.request.user.id:
-            raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
-        
-        if instance.negative == False:
+    @action(detail=True,methods=['patch'])
+    def add_negative_counter(self,request,pk=None):
+        obj=self.get_object()
+        serializer=self.get_serializer(obj)
+        if obj.negative == False:
             raise ValidationError("Não é possível adicionar, pois o hábito é positivo.")
+        obj.negative_count=obj.negative_count + 1
+        obj.save()
 
-        serializer.save(negative_count=instance.negative_count + 1)
+        serializer=self.get_serializer(obj)
+        return Response(serializer.data,status=status.HTTP_200_OK)
 
