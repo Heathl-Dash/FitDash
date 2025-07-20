@@ -47,3 +47,12 @@ class ToDoViewSet(ModelViewSet):
                 {"detail": "Formato de arquivo inválido. Use 'csv' ou 'xlsx'."},
                 status=status.HTTP_400_BAD_REQUEST
             )
+    
+    @action(detail=True,methods=['patch'])
+    def todo_toggle(self,request,pk=None):
+        instance = self.get_object()
+        instance.done=not instance.done
+        instance.save()
+
+        serializer = self.get_serializer(instance)
+        return Response(serializer.data,status=status.HTTP_200_OK)

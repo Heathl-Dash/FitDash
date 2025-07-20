@@ -1,5 +1,5 @@
-from ..serializers import HabitSerializer,TodoSerializer
-from ..models import ToDo, Habit
+from ..serializers import HabitSerializer
+from ..models import  Habit
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action
@@ -13,22 +13,14 @@ from ..utils import SheetExporter
 class HabitViewSet(ModelViewSet):
     serializer_class=HabitSerializer
     queryset=Habit.objects.all()
-    
-    def perform_update(self, serializer):
-        instance = self.get_object()
-        if instance.user_id != self.request.user.id:
+
+    def get_object(self):
+        obj= super().get_object()
+        if obj.user_id != self.request.user.id:
             raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
-
-        serializer.save(user_id=instance.user_id)
-
+        return obj
     def perform_create(self, serializer):
         serializer.save(user_id=self.request.user.id)
-
-    def perform_destroy(self, instance):
-        if instance.user_id != self.request.user.id:
-            raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
-
-        instance.delete()
 
     def get_queryset(self):
         queryset = Habit.objects.filter(user_id = self.request.user.id)
@@ -84,15 +76,3 @@ class HabitAddNegativeCountView(UpdateAPIView):
 
         serializer.save(negative_count=instance.negative_count + 1)
 
-
-class ToDoToggleMarkView(UpdateAPIView):
-    serializer_class = TodoSerializer
-    queryset = ToDo.objects.all()
-
-    def perform_update(self, serializer):
-        instance = self.get_object()
-
-        if instance.user_id != self.request.user.id:
-            raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
-        
-        serializer.save(done=not instance.done)

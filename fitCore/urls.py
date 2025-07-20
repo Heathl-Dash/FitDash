@@ -4,7 +4,6 @@ from .viewsets import (
     HabitViewSet, 
     HabitAddPositiveCountView,
     HabitAddNegativeCountView, 
-    ToDoToggleMarkView
 )
 from rest_framework.routers import DefaultRouter
 
@@ -22,9 +21,5 @@ urlpatterns = [
     path('habit/<int:pk>/add-negative-counter/', 
          HabitAddNegativeCountView.as_view(), 
          name="habit-add-negative-counter"
-    ),
-    path('todo/<int:pk>/done-toggle/',
-        ToDoToggleMarkView.as_view(),
-        name="todo-done-toggle"
-    ),
+    )
 ]
