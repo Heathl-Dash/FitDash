@@ -2,12 +2,16 @@ from .serializers import TodoSerializer, HabitSerializer
 from ..models import ToDo, Habit
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.decorators import action
 from rest_framework.generics import UpdateAPIView
+from rest_framework.response import Response
+from rest_framework import status
+
+from ..utils import SheetExporter
 
 class ToDoViewSet(ModelViewSet):
     serializer_class=TodoSerializer
     queryset=ToDo.objects.all()
-
     def perform_update(self, serializer):
         instance = self.get_object()
         if instance.user_id != self.request.user.id:
@@ -27,6 +31,24 @@ class ToDoViewSet(ModelViewSet):
     def get_queryset(self):
         queryset = ToDo.objects.filter(user_id = self.request.user.id)
         return queryset
+
+    @action(detail=False,methods=['get'])
+    def export(self,request):
+        query=self.get_queryset()
+        serialized=TodoSerializer(query,many=True)
+        exporter=SheetExporter()
+
+        format=request.query_params.get('formato', 'csv').lower()
+
+        if format=='csv':
+            return exporter.generate_csv_response(serialized.data,'Todo')
+        elif format=='xlsx':
+            return exporter.generate_xlsx_response(serialized.data,'Todo','Todo')
+        else:
+            return Response(
+                {"detail": "Formato de arquivo inválido. Use 'csv' ou 'xlsx'."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
 
 class HabitViewSet(ModelViewSet):
     serializer_class=HabitSerializer
