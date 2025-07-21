@@ -3,8 +3,11 @@ RUN apt-get update && apt-get install -y cron procps
 
 COPY backup_script.sh /docker-entrypoint-initdb.d/backup_script.sh
 COPY start.sh /start.sh
+COPY create_mv.sql /docker-entrypoint-initdb.d/create_mv.sql
+COPY refresh_views.sh /docker-entrypoint-initdb.d/refresh_views.sh
 
 RUN chmod +x /start.sh
 RUN chmod +x /docker-entrypoint-initdb.d/backup_script.sh
+RUN chmod +x /docker-entrypoint-initdb.d/refresh_views.sh
 
 CMD ["/start.sh"]
