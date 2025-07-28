@@ -11,7 +11,7 @@ class FitData(models.Model):
 
     def save(self,*args, **kwargs):
         user=get_current_user()
-        print(user)
-        return super().save(user_id=user.id)
+        self.user_id=user.id
+        return super().save()
 
     
