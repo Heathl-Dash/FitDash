@@ -1,9 +1,8 @@
 from django.db import models
-from datetime import date
 from crum import get_current_user
 
 class FitData(models.Model):
-    date=models.DateField(default=date.today)
+    fit_date=models.DateField()
     steps=models.PositiveBigIntegerField(default=0)
     distance=models.DecimalField(max_digits=8,decimal_places=2)
     burned_calories=models.DecimalField(max_digits=12,decimal_places=4)
