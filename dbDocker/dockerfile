@@ -9,8 +9,6 @@ COPY refresh_views.sh /usr/local/bin/scripts/refresh_views.sh
 COPY create_mv_init.sh /usr/local/bin/create_mv_init.sh
 RUN chmod +x /usr/local/bin/create_mv_init.sh
 
-COPY .env /.env
-
 RUN chmod +x /start.sh
 RUN chmod +x /docker-entrypoint-initdb.d/backup_script.sh
 RUN chmod +x /usr/local/bin/scripts/refresh_views.sh
