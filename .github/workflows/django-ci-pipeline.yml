@@ -53,7 +53,7 @@ jobs:
 
 
     - name: build docker
-      run: docker-compose up --build -d --wait
+      run: docker compose up --build -d --wait
 
     - name: Parar e remover Docker Compose
       if: always()
