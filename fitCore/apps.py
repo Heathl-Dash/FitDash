@@ -2,5 +2,5 @@ from django.apps import AppConfig
 
 
 class FitcoreConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'fitCore'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "fitCore"

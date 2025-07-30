@@ -7,9 +7,11 @@ from ..models import ToDo
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.viewsets import ModelViewSet
 
+
 class ToDoViewSet(ModelViewSet):
-    serializer_class=TodoSerializer
-    queryset=ToDo.objects.all()
+    serializer_class = TodoSerializer
+    queryset = ToDo.objects.all()
+
     def perform_update(self, serializer):
         instance = self.get_object()
         if instance.user_id != self.request.user.id:
@@ -27,32 +29,32 @@ class ToDoViewSet(ModelViewSet):
         instance.delete()
 
     def get_queryset(self):
-        queryset = ToDo.objects.filter(user_id = self.request.user.id)
+        queryset = ToDo.objects.filter(user_id=self.request.user.id)
         return queryset
 
-    @action(detail=False,methods=['get'])
-    def export(self,request):
-        query=self.get_queryset()
-        serialized=TodoSerializer(query,many=True)
-        exporter=SheetExporter()
+    @action(detail=False, methods=["get"])
+    def export(self, request):
+        query = self.get_queryset()
+        serialized = TodoSerializer(query, many=True)
+        exporter = SheetExporter()
 
-        format=request.query_params.get('formato', 'csv').lower()
+        format = request.query_params.get("formato", "csv").lower()
 
-        if format=='csv':
-            return exporter.generate_csv_response(serialized.data,'Todo')
-        elif format=='xlsx':
-            return exporter.generate_xlsx_response(serialized.data,'Todo','Todo')
+        if format == "csv":
+            return exporter.generate_csv_response(serialized.data, "Todo")
+        elif format == "xlsx":
+            return exporter.generate_xlsx_response(serialized.data, "Todo", "Todo")
         else:
             return Response(
                 {"detail": "Formato de arquivo inválido. Use 'csv' ou 'xlsx'."},
-                status=status.HTTP_400_BAD_REQUEST
+                status=status.HTTP_400_BAD_REQUEST,
             )
-    
-    @action(detail=True,methods=['patch'])
-    def done_toggle(self,request,pk=None):
+
+    @action(detail=True, methods=["patch"])
+    def done_toggle(self, request, pk=None):
         instance = self.get_object()
-        instance.done=not instance.done
+        instance.done = not instance.done
         instance.save()
 
         serializer = self.get_serializer(instance)
-        return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response(serializer.data, status=status.HTTP_200_OK)
