@@ -2,6 +2,7 @@ from rest_framework import serializers
 from ..models import FitData
 from crum import get_current_user
 
+
 class FitDataSerializer(serializers.ModelSerializer):
     user_id=serializers.IntegerField(read_only=True)
     id=serializers.IntegerField(read_only=True)
@@ -20,6 +21,7 @@ class FitDataSerializer(serializers.ModelSerializer):
             }
         )
         return instance
+
     class Meta:
-        model = FitData        
+        model = FitData
         fields = ['id','steps','distance','burned_calories','user_id','fit_date']

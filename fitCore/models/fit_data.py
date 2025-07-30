@@ -1,6 +1,7 @@
 from django.db import models
 from crum import get_current_user
 
+
 class FitData(models.Model):
     fit_date=models.DateField()
     steps=models.PositiveBigIntegerField(default=0)

@@ -1,6 +1,6 @@
 from django.urls import path, include
 from .viewsets import (
-    ToDoViewSet, 
+    ToDoViewSet,
     HabitViewSet,
     FitDataViewSet
 )
