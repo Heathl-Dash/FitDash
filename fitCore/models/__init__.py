@@ -1,7 +1,4 @@
 from .habit import Habit
 from .todo import ToDo
 
-__all__=[
-    habit,
-    ToDo
-]
+__all__ = [Habit, ToDo]
