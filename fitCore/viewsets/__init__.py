@@ -1,4 +1,9 @@
 from .habit_viewset import HabitViewSet
 from .todo_viewset import ToDoViewSet
 
-__all__ = [HabitViewSet, ToDoViewSet]
+from .fitdata_viewset import FitDataViewSet
+__all__=[
+    HabitViewSet,
+    ToDoViewSet,
+    FitDataViewSet
+]
