@@ -48,7 +48,7 @@ jobs:
 
     - name: redes para o docker
       run: |
-        docker network create fitdashboard-rede || true
+        docker network create gateway-shared-net
         docker network create rabbit-MQ-extern-network || true
 
 
