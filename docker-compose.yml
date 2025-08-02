@@ -8,7 +8,7 @@ services:
     ports:
       - 5434:5432
     networks:
-      - fitdashboard-rede
+      - gateway-shared-net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -43,15 +43,14 @@ services:
       fitdashboard-db:
         condition: service_healthy
     networks:
-      - fitdashboard-rede
+      - gateway-shared-net
       - rabbit-MQ-extern-network
     
     
 
 networks:
-  fitdashboard-rede:
+  gateway-shared-net:
     external: true
-    name: fitdashboard-rede
   rabbit-MQ-extern-network:
     external: true
 

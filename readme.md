@@ -1,14 +1,9 @@
 # iniciar docker compose
 ## criar rede externa
+essa rede deve ser criada antes de qualquer um dos serviços, pois os conecta ao nginx
 
-iniciar o docker swarm para utilizar networks de overlay
 ```bash
-docker swarm init
-```
-
-criar network externa de overlay
-```bash
-docker network create --driver overlay --attachable fitdashboard-rede
+docker network create gateway-shared-net
 ```
 
 ## docker build
