@@ -2,7 +2,6 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-print(os.environ.get("DB_NAME"))
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("DB_ENGINE"),
