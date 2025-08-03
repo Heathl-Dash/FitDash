@@ -1,5 +1,5 @@
-from django.shortcuts import render,HttpResponse
+from django.shortcuts import HttpResponse
 
 
 def first(request):
-    return HttpResponse('FitDash Init')
+    return HttpResponse("FitDash Init")

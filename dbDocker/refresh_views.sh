@@ -1,0 +1,8 @@
+#!/bin/bash
+set -e
+
+PGPASSWORD="${POSTGRES_PASSWORD}" \
+psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" -c "REFRESH MATERIALIZED VIEW todo_semana;"
+
+PGPASSWORD="${POSTGRES_PASSWORD}" \
+psql -U "${POSTGRES_USER}" -d "${POSTGRES_DB}" -c "REFRESH MATERIALIZED VIEW habit_semana;"
