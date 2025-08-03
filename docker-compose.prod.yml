@@ -1,0 +1,41 @@
+version: '3.7'
+
+services:
+
+  django_fitdashboard:
+    build: .
+    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
+    environment:
+      - DB_HOST=fitdashboard-db
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PORT=${DB_PORT}
+      - DEBUG=${DEBUG}
+      - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME}
+      - RABBITMQ_EXCHANGE_NAME=${RABBITMQ_EXCHANGE_NAME}
+      - RABBITMQ_EXCHANGE_TYPE=${RABBITMQ_EXCHANGE_TYPE}
+      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
+      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
+      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
+      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
+      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
+
+    ports:
+      - 8002:8000
+    volumes:
+      - .:/fitDash
+    networks:
+      - gateway-shared-net
+      - rabbit-MQ-extern-network
+    
+    
+
+networks:
+  gateway-shared-net:
+    external: true
+  rabbit-MQ-extern-network:
+    external: true
+
+volumes:
+  postgres_persistance:
