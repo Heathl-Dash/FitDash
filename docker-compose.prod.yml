@@ -6,6 +6,7 @@ services:
     build: .
     command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
     environment:
+      - ALLOWED_HOSTS={ALLOWED_HOSTS}
       - DB_HOST=${POSTGRES_HOST}
       - DB_NAME=${POSTGRES_DB}
       - DB_ENGINE=django.db.backends.postgresql
