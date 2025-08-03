@@ -31,12 +31,13 @@ jobs:
 
             export DB_USER=${{ secrets.DB_USER }} \
             export POSTGRES_USER=${{ secrets.DB_USER }} \
+            
+            export DB_PORT=${{ secrets.DB_PORT }} \
 
             export DB_PASSWORD=${{ secrets.DB_PASSWORD }} \
             export POSTGRES_PASSWORD=${{ secrets.DB_PASSWORD }} \
             
             export DEBUG=${{secrets.DEBUG}}
-            export DB_PORT=${{ secrets.DB_PORT }} \
             export SECRETJWT=${{ secrets.SECRETJWT }} \
             export RABBITMQ_DEFAULT_USER=${{ secrets.RABBITMQ_DEFAULT_USER }} \
             export RABBITMQ_DEFAULT_PASS=${{ secrets.RABBITMQ_DEFAULT_PASS }} \
