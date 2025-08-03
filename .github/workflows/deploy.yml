@@ -42,5 +42,6 @@ jobs:
             export RABBITMQ_DEFAULT_VHOST=${{ secrets.RABBITMQ_DEFAULT_VHOST }} \
             export RABBITMQ_QUEUE_NAME=${{secrets.RABBITMQ_QUEUE_NAME}} \
             export RABBITMQ_EXCHANGE_NAME=${{secrets.RABBITMQ_EXCHANGE_NAME}} \
-            export RABBITMQ_EXCHANGE_TYPE=${{secrets.RABBITMQ_EXCHANGE_TYPE}} \
+            export RABBITMQ_EXCHANGE_TYPE=${{secrets.RABBITMQ_EXCHANGE_TYPE}} 
+            
             docker-compose -f docker-compose.prod.yml up -d --build
