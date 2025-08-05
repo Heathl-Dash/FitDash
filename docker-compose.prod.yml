@@ -4,6 +4,8 @@ services:
 
   django_fitdashboard:
     build: .
+    env_file:
+      - .env.prod
     command: sh -c "python manage.py migrate && python manage.py create_all_mv && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
     environment:
       - ALLOWED_HOSTS=${ALLOWED_HOSTS}
