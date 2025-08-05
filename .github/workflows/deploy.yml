@@ -13,9 +13,9 @@ jobs:
       - name: Deploy via SSH
         uses: appleboy/ssh-action@v1.0.0
         with:
-          host: ${{ secrets.EC2_HOST  }} >> .env.prod
-          username: ${{secrets.EC2_USER }} >> .env.prod
-          key: ${{ secrets.EC2_SSH_KEY  }} >> .env.prod
+          host: ${{ secrets.EC2_HOST  }}
+          username: ${{secrets.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY  }}
           envs: DB_HOST,DB_NAME,DB_USER,DB_PASSWORD,DB_PORT,RABBITMQ_DEFAULT_USER,RABBITMQ_DEFAULT_PASS,RABBITMQ_DEFAULT_VHOST,ALLOWED_HOSTS,DB_ENGINE,DB_PORT,DEBUG,RABBITMQ_QUEUE_NAME,RABBITMQ_EXCHANGE_NAME,RABBITMQ_EXCHANGE_TYPE,RABBITMQ_DEFAULT_HOST,RABBITMQ_DEFAULT_USER,RABBITMQ_DEFAULT_PASS,RABBITMQ_DEFAULT_VHOST,RABBITMQ_DEFAULT_PORT
           script: |
             cd /home/ubuntu/repos/FitDash
