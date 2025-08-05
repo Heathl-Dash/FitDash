@@ -49,7 +49,8 @@ def start_delete_user_objects():
                 try:
                     data = json.loads(body)
                     user_id = data.get("user_id")
-                    if user_id is not None:
+                    event=data.get("event")
+                    if user_id is not None and event=="delete":
                         Habit.objects.filter(user_id=user_id).delete()
                         ToDo.objects.filter(user_id=user_id).delete()
                 except Exception as e:
