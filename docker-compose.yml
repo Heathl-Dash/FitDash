@@ -23,7 +23,7 @@ services:
 
   django_fitdashboard:
     build: .
-    command: sh -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
+    command: sh -c "python manage.py migrate && python manage.py create_all_mv && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
     env_file: .env
     environment:
       - DB_HOST=fitdashboard-db

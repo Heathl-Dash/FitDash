@@ -1,5 +1,5 @@
-from ..serializers import FitDataSerializer
-from ..models import FitData
+from ..serializers import FitDataSerializer,FitDataWeekSerializer
+from ..models import FitData,FitDataWeek
 from rest_framework.exceptions import PermissionDenied, ValidationError
 from crum import get_current_user
 from rest_framework.viewsets import ModelViewSet
@@ -21,4 +21,12 @@ class FitDataViewSet(ModelViewSet):
     
     def get_queryset(self):
         user=get_current_user()
-        return FitData.objects.filter(user_id=user.id)
+        return FitData.objects.filter(user_id=user.id).order_by("fit_date")
+    
+    @action(detail=False,methods=["GET"])
+    def week(self,request, *args, **kwargs):
+        user=get_current_user()
+        queryset=FitDataWeek.objects.filter(user_id=user.id)
+        serializer=FitDataWeekSerializer(queryset,many=True)
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
