@@ -8,22 +8,7 @@ services:
       - .env.prod
     command: sh -c "python manage.py migrate && python manage.py create_all_mv && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
     environment:
-      - ALLOWED_HOSTS=${ALLOWED_HOSTS}
-      - DB_HOST=${POSTGRES_HOST}
-      - DB_NAME=${POSTGRES_DB}
       - DB_ENGINE=django.db.backends.postgresql
-      - DB_PASSWORD=${POSTGRES_PASSWORD}
-      - DB_USER=${POSTGRES_USER}
-      - DB_PORT=${DB_PORT}
-      - DEBUG=${DEBUG}
-      - RABBITMQ_QUEUE_NAME=${RABBITMQ_QUEUE_NAME}
-      - RABBITMQ_EXCHANGE_NAME=${RABBITMQ_EXCHANGE_NAME}
-      - RABBITMQ_EXCHANGE_TYPE=${RABBITMQ_EXCHANGE_TYPE}
-      - RABBITMQ_DEFAULT_HOST=${RABBITMQ_DEFAULT_HOST}
-      - RABBITMQ_DEFAULT_USER=${RABBITMQ_DEFAULT_USER}
-      - RABBITMQ_DEFAULT_PASS=${RABBITMQ_DEFAULT_PASS}
-      - RABBITMQ_DEFAULT_VHOST=${RABBITMQ_DEFAULT_VHOST}
-      - RABBITMQ_DEFAULT_PORT=${RABBITMQ_DEFAULT_PORT}
 
     ports:
       - 8002:8000
