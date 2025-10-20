@@ -119,3 +119,38 @@ def test_dont_permit_add_negative_counter_to_positive_habit(auth_client):
     new_habit = HabitFactory.create(user_id=1, positive=True, negative=False)
     response = auth_client.patch(f"/api/v1/fit/habit/{new_habit.id}/add_negative_counter/")
     assert response.status_code == 400
+
+@pytest.mark.django_db
+def test_dont_permit_update_habit_that_isnt_from_user(auth_client):
+    new_habit = HabitFactory.create(user_id=2)
+    updated_data = {
+        "title": "Novo título",
+        "description": "Nova descrição",
+        "positive": True,
+        "negative": False,
+    }
+    response = auth_client.patch(
+        f"/api/v1/fit/habit/{new_habit.id}/", data=updated_data, format="json")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_access_habit_that_isnt_from_user(auth_client):
+    new_habit = HabitFactory.create(user_id=2)
+    response = auth_client.get(f"/api/v1/fit/habit/{new_habit.id}/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_return_none_for_unexistent_habit(auth_client):
+    response = auth_client.get(f"/api/v1/fit/habit/999/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_exclude_unexistent_habit(auth_client):
+    response = auth_client.delete(f"/api/v1/fit/habit/999/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_exclude_habit_that_isnt_from_user(auth_client):
+    new_habit = HabitFactory.create(user_id=2)
+    response = auth_client.delete(f"/api/v1/fit/habit/{new_habit.id}/")
+    assert response.status_code == 404

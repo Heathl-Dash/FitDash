@@ -41,7 +41,7 @@ def test_edit_habit(auth_client):
     assert todo.description == updated_data["description"]
 
 @pytest.mark.django_db
-def test_list_habit(auth_client):
+def test_list_todo(auth_client):
     ToDoFactory.create_batch(3, user_id=1)  
 
     response = auth_client.get("/api/v1/fit/todo/")
@@ -57,7 +57,7 @@ def test_list_habit(auth_client):
     assert expected_fields.issubset(first.keys())
 
 @pytest.mark.django_db
-def test_retrieve_habit(auth_client):
+def test_retrieve_todo(auth_client):
     todo = ToDoFactory.create(user_id=1)
 
     response = auth_client.get(f"/api/v1/fit/todo/{todo.id}/")
@@ -68,3 +68,36 @@ def test_retrieve_habit(auth_client):
     assert data["title"] == todo.title
     assert data["description"] == todo.description
     assert data["done"] == todo.done
+
+@pytest.mark.django_db
+def test_dont_permit_update_todo_that_isnt_from_user(auth_client):
+    new_todo = ToDoFactory.create(user_id=2)
+    updated_data = {
+        "title": "Novo título",
+        "description": "Nova descrição",
+    }
+    response = auth_client.patch(
+        f"/api/v1/fit/todo/{new_todo.id}/", data=updated_data, format="json")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_access_todo_that_isnt_from_user(auth_client):
+    new_todo = ToDoFactory.create(user_id=2)
+    response = auth_client.get(f"/api/v1/fit/todo/{new_todo.id}/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_return_none_for_unexistent_todo(auth_client):
+    response = auth_client.get(f"/api/v1/fit/todo/999/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_exclude_unexistent_todo(auth_client):
+    response = auth_client.delete(f"/api/v1/fit/todo/999/")
+    assert response.status_code == 404
+
+@pytest.mark.django_db
+def test_dont_permit_exclude_todo_that_isnt_from_user(auth_client):
+    new_todo = ToDoFactory.create(user_id=2)
+    response = auth_client.delete(f"/api/v1/fit/todo/{new_todo.id}/")
+    assert response.status_code == 404
