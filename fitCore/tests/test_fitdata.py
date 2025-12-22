@@ -71,6 +71,28 @@ def test_dont_permit_user_access_other_user_unit():
 
     assert not can_user_access(current_user, fitdata)
 
+#Mutante 1
+# def test_dont_permit_user_access_other_user_unit():
+#     """Testa que usuário não consegue acessar FitData de outro usuário."""
+#     fitdata = FitDataFactory.build(user_id=2)
+#     current_user = Mock(id=1)
+
+#     def can_user_access(user, obj):
+#         return obj.user_id != user.id
+
+#     assert not can_user_access(current_user, fitdata)
+
+#Mutante 2
+# def test_dont_permit_user_access_other_user_unit_m2():
+#     """Testa que usuário não consegue acessar FitData de outro usuário."""
+#     fitdata = FitDataFactory.build(user_id=2)
+#     current_user = Mock(id=1)
+
+#     def can_user_access(user, obj):
+#         return obj.user_id >= user.id
+
+#     assert not can_user_access(current_user, fitdata)
+
 
 def test_dont_permit_user_update_other_user_unit():
     """Testa que usuário não consegue atualizar FitData de outro usuário."""

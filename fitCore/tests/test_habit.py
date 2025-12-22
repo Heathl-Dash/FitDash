@@ -90,6 +90,35 @@ def test_habit_counters_unit():
     assert habit_positive.positive_count == 3
     assert habit_negative.negative_count == 4
 
+#Mutante 3
+# def test_habit_counters_unit():
+#     habit_positive = HabitFactory.build(user_id=1, positive=True, negative=False, positive_count=2)
+#     habit_negative = HabitFactory.build(user_id=1, positive=False, negative=True, negative_count=3)
+
+#     # Incrementa contadores
+#     if habit_positive.positive:
+#         habit_positive.positive_count += 2
+#     if habit_negative.negative:
+#         habit_negative.negative_count += 2
+
+#     assert habit_positive.positive_count == 3
+#     assert habit_negative.negative_count == 4
+
+
+
+#Mutante 4
+# def test_habit_counters_unit():
+#     habit_positive = HabitFactory.build(user_id=1, positive=True, negative=False, positive_count=2)
+#     habit_negative = HabitFactory.build(user_id=1, positive=False, negative=True, negative_count=3)
+
+#     # Incrementa contadores
+#     if habit_positive.positive:
+#         habit_positive.positive_count -= 1
+#     if habit_negative.negative:
+#         habit_negative.negative_count -= 1
+
+#     assert habit_positive.positive_count == 3
+#     assert habit_negative.negative_count == 4
 
 def test_habit_permission_unit():
     habit_user2 = HabitFactory.build(user_id=2)
@@ -103,13 +132,34 @@ def test_habit_permission_unit():
 
 
 def test_habit_validation_unit():
-    # Um hábito não pode ser positivo e negativo ao mesmo tempo
+# Um hábito não pode ser positivo e negativo ao mesmo tempo
     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
 
     def is_valid_habit(data):
         return data["positive"] or data["negative"]
 
     assert not is_valid_habit(habit_data)
+
+#Mutation 5
+# def test_habit_validation_unit():
+#     # Um hábito não pode ser positivo e negativo ao mesmo tempo
+#     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
+
+#     def is_valid_habit(data):
+#         return data["positive"] and data["negative"]
+
+#     assert not is_valid_habit(habit_data)
+
+
+#mutation 6
+# def test_habit_validation_unit():
+#     # Um hábito não pode ser positivo e negativo ao mesmo tempo
+#     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
+
+#     def is_valid_habit(data):
+#         return not(data["positive"] or data["negative"])
+
+#     assert not is_valid_habit(habit_data)
 
 # @pytest.mark.django_db
 # def test_create_habit(auth_client):
