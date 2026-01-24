@@ -2,7 +2,7 @@ from django.db import models
 
 
 class HabitSemana(models.Model):
-    user_id = models.PositiveIntegerField(primary_key=True)
+    user_id = models.UUIDField(editable=False)
     dia = models.DateField()
     total_habits = models.IntegerField()
     habits_positivos = models.IntegerField()

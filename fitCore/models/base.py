@@ -3,7 +3,7 @@ from django.db import models
 
 class ToDoBase(models.Model):
     title = models.CharField(max_length=50)
-    user_id = models.PositiveIntegerField()
+    user_id = models.UUIDField(editable=False)
     description = models.TextField(blank=True)
     created = models.DateTimeField(auto_now_add=True)
 

@@ -1,15 +1,14 @@
 import os
-from datetime import timedelta
+
+KEYCLOAK_URL = os.environ.get("KEYCLOAK_SERVER_REALM_URL", "http//localhost:8080")
+
 SIMPLE_JWT = {
-    "ROTATE_REFRESH_TOKENS": True,
-    "BLACKLIST_AFTER_ROTATION": True,
-    "ALGORITHM": "HS256",
-    "SIGNING_KEY": os.environ.get("SECRETJWT"),
+    "ALGORITHM": "RS256",
+    "JWK_URL": f"{KEYCLOAK_URL}/protocol/openid-connect/certs",
     "AUTH_HEADER_TYPES": ("Bearer",),
+    
     "USER_ID_FIELD": "id",
-    "USER_ID_CLAIM": "user_id",
-    "USER_AUTHENTICATION_RULE": "rest_framework_simplejwt.authentication.default_user_authentication_rule",
-    "AUTH_TOKEN_CLASSES": ("rest_framework_simplejwt.tokens.AccessToken",),
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=60),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=10),
+    "USER_ID_CLAIM": "sub", 
+    
+    "AUTH_TOKEN_CLASSES": ("fitCore.api.permission_classes.KeycloakAccessToken",),
 }
