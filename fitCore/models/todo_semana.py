@@ -2,7 +2,7 @@ from django.db import models
 
 
 class ToDoSemana(models.Model):
-    user_id = models.PositiveIntegerField(primary_key=True)
+    user_id = models.UUIDField(editable=False)
     dia = models.DateField()
     total_todos = models.IntegerField()
     todos_concluidos = models.IntegerField()
