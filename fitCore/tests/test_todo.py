@@ -3,19 +3,19 @@ from factories import ToDoFactory
 from fitCore.models import ToDo
 from unittest.mock import Mock, patch
 
+@pytest.mark.django_db
 def test_create_todo_unit():
     todo = ToDoFactory.build(title="Comprar leite", description="Ir ao mercado", user_id=1)
 
-    # Mocka save para não acessar o banco
     with patch.object(todo, "save", return_value=None):
         todo.save()
 
     assert todo.title == "Comprar leite"
     assert todo.description == "Ir ao mercado"
     assert todo.user_id == 1
-    assert todo.done is False  # valor default
+    assert todo.done is False  
 
-
+@pytest.mark.django_db
 def test_edit_todo_unit():
     todo = ToDoFactory.build(title="Antigo", description="Velho", user_id=1)
 
@@ -32,11 +32,10 @@ def test_edit_todo_unit():
     assert todo.title == "Novo título"
     assert todo.description == "Nova descrição"
 
-
+@pytest.mark.django_db
 def test_list_todo_unit():
     todos = ToDoFactory.build_batch(3, user_id=1)
 
-    # Simula função que retornaria todos os ToDos de um usuário
     def list_todos_for_user(user_id):
         return todos
 
@@ -47,7 +46,7 @@ def test_list_todo_unit():
         assert hasattr(todo, "description")
         assert hasattr(todo, "done")
 
-
+@pytest.mark.django_db
 def test_retrieve_todo_unit():
     todo = ToDoFactory.build(title="Comprar leite", description="Mercado", user_id=1, done=False)
 
@@ -59,7 +58,7 @@ def test_retrieve_todo_unit():
     assert retrieved.description == "Mercado"
     assert retrieved.done is False
 
-
+@pytest.mark.django_db
 def test_todo_permission_unit():
     todo_user2 = ToDoFactory.build(user_id=2)
     current_user = Mock(id=1)
@@ -70,7 +69,7 @@ def test_todo_permission_unit():
     assert not can_access(current_user, todo_user2)
     assert can_access(Mock(id=2), todo_user2)
 
-
+@pytest.mark.django_db
 def test_return_none_for_unexistent_todo_unit():
     def get_todo(todo_id):
         todos = []
@@ -78,7 +77,7 @@ def test_return_none_for_unexistent_todo_unit():
 
     assert get_todo(999) is None
 
-
+@pytest.mark.django_db
 def test_dont_permit_delete_todo_unit():
     todo_user2 = ToDoFactory.build(user_id=2)
     current_user = Mock(id=1)

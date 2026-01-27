@@ -17,7 +17,6 @@ def test_create_habit_unit_simple():
         user_id=1
     )
 
-    # Mocka o save para não acessar o DB
     with patch.object(habit, "save", return_value=None):
         habit.save()
 
@@ -51,7 +50,6 @@ def test_edit_habit_unit(mock_user):
 
 def test_list_habit_unit():
     habits = HabitFactory.build_batch(3, user_id=1)
-    # Simula função que retornaria a lista do DB
     def list_habits_for_user(user_id):
         return habits
 
@@ -66,7 +64,6 @@ def test_list_habit_unit():
 
 def test_retrieve_habit_unit():
     habit = HabitFactory.build(user_id=1, title="Ex", description="Desc", positive=True, negative=False)
-    # Função que simula busca
     def get_habit(habit_id):
         return habit if habit_id == 1 else None
 
@@ -81,7 +78,6 @@ def test_habit_counters_unit():
     habit_positive = HabitFactory.build(user_id=1, positive=True, negative=False, positive_count=2)
     habit_negative = HabitFactory.build(user_id=1, positive=False, negative=True, negative_count=3)
 
-    # Incrementa contadores
     if habit_positive.positive:
         habit_positive.positive_count += 1
     if habit_negative.negative:
@@ -103,7 +99,6 @@ def test_habit_permission_unit():
 
 
 def test_habit_validation_unit():
-    # Um hábito não pode ser positivo e negativo ao mesmo tempo
     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
 
     def is_valid_habit(data):
