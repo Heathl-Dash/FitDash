@@ -10,8 +10,10 @@ class FitData(models.Model):
     user_id=models.UUIDField(editable=False)
 
     def save(self,*args, **kwargs):
-        user=get_current_user()
-        self.user_id=user.id
-        return super().save()
+        if not self.user_id:
+            user=get_current_user()
+            if user:
+                self.user_id=user.id
+        return super().save(*args, **kwargs)
 
     
