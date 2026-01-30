@@ -5,8 +5,6 @@ services:
     build: 
       context: ./dbDocker
     env_file: .env
-    networks:
-      - gateway-shared-net
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
       interval: 5s
@@ -41,14 +39,10 @@ services:
       fitdashboard-db:
         condition: service_healthy
     networks:
-      - gateway-shared-net
       - rabbit-MQ-extern-network
     
     
-
 networks:
-  gateway-shared-net:
-    external: true
   rabbit-MQ-extern-network:
     external: true
 
