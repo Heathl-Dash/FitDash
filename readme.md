@@ -11,3 +11,10 @@ para iniciar o docker compose
 ```bash
 docker compose up --build
 ```
+
+ESSA BRANCH SERÁ UTILIZADA APENAS PARA TESTES E NÃO DEVE TER MERGES
+
+executar o comando abaixo para gerar dados falsos para testes de estresse
+```bash
+docker compose exec django_fitdashboard python manage.py seed_data
+```
