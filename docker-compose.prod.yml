@@ -38,13 +38,7 @@ services:
     depends_on:
       fitdashboard-db:
         condition: service_healthy
-    networks:
-      - rabbit-MQ-extern-network
     
-    
-networks:
-  rabbit-MQ-extern-network:
-    external: true
 
 volumes:
   postgres_persistance:
