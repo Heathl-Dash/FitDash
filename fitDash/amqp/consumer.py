@@ -40,7 +40,7 @@ def start_delete_user_objects():
             _, chan = __get_connection_and_channel()
 
             chan.exchange_declare(
-                exchange=RABBITMQ_EXCHANGE_NAME, exchange_type=RABBITMQ_EXCHANGE_TYPE
+                exchange=RABBITMQ_EXCHANGE_NAME, exchange_type=RABBITMQ_EXCHANGE_TYPE, durable=True
             )
 
             chan.queue_declare(RABBITMQ_QUEUE_NAME, durable=True)
