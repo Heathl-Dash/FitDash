@@ -1,4 +1,3 @@
-
 from django.core.management.base import BaseCommand
 from django.db import connection
 from fitCore.materialized_views import base
@@ -13,18 +12,25 @@ def load_all_views():
 
 
 class Command(BaseCommand):
-    help = 'Atualiza todas as materialized views registradas.'
+    help = "Atualiza todas as materialized views registradas."
 
     def add_arguments(self, parser):
-        parser.add_argument('--only', type=str, help='Atualiza apenas a view especificada')
-        parser.add_argument('--frequency', type=str, choices=['daily', 'weekly', 'monthly'], help='Atualiza views por frequência')
+        parser.add_argument(
+            "--only", type=str, help="Atualiza apenas a view especificada"
+        )
+        parser.add_argument(
+            "--frequency",
+            type=str,
+            choices=["daily", "weekly", "monthly"],
+            help="Atualiza views por frequência",
+        )
 
     def handle(self, *args, **options):
         load_all_views()
-        only = options['only']
-        frequency = options['frequency']
+        only = options["only"]
+        frequency = options["frequency"]
 
-        updated=0
+        updated = 0
 
         for name, mv in base.MV_REGISTRY.items():
             if only and only != name:
@@ -33,8 +39,12 @@ class Command(BaseCommand):
                 continue
             with connection.cursor() as cursor:
                 cursor.execute(f"REFRESH MATERIALIZED VIEW {name}")
-            self.stdout.write(self.style.SUCCESS(f"View '{name}' atualizada com sucesso."))
-            updated+=1
-            
+            self.stdout.write(
+                self.style.SUCCESS(f"View '{name}' atualizada com sucesso.")
+            )
+            updated += 1
+
         if updated == 0:
-            self.stdout.write(self.style.WARNING("Nenhuma materialized view foi atualizada."))
+            self.stdout.write(
+                self.style.WARNING("Nenhuma materialized view foi atualizada.")
+            )

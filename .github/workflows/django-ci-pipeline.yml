@@ -1,12 +1,8 @@
 name: CI/CD com Django e PostgreSQL
 
 on:
-  push:
-    branches:
-      - develop
   pull_request:
-    branches:
-      - develop
+    branches: [develop, main]
 
 jobs:
   build-and-test:
@@ -19,15 +15,16 @@ jobs:
     - name: Configurar Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.9' 
+        python-version: '3.12'
 
-    - name: Instalar Flake8
-      run: pip install flake8
+    - name: Instalar Ruff
+      run: pip install ruff
 
-    - name: Executar Flake8 Lint
-      run: flake8 .
-      env:
-        FLAKE8_CONFIG: .flake8
+    - name: Verificar formatação (Ruff Format)
+      run: ruff format --check .
+
+    - name: Verificar erros de lint (Ruff Check)
+      run: ruff check .
 
     - name: Configurar .env para CI
       run: |
@@ -38,27 +35,18 @@ jobs:
         echo "ACCESS_TIME=3600" >> .env
         echo "REFRESH_TIME=86400" >> .env
         echo "DEBUG=True" >> .env
-      env:
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTS_PASSWORD }}
-
 
     - name: redes para o docker
       run: |
         docker network create gateway-shared-net
         docker network create rabbit-MQ-extern-network || true
 
-
-    - name: build docker
+    - name: Build e subir containers
       run: docker compose up --build -d --wait
 
     - name: Obter logs do DB se a inicialização falhou
       if: failure()
-      run: |
-        echo "Iniciando coleta de logs do fitdashboard-db..."
-        docker compose logs fitdashboard-db
-        echo "Coleta de logs concluída."
+      run: docker compose logs fitdashboard-db
 
     - name: Parar e remover Docker Compose
       if: always()

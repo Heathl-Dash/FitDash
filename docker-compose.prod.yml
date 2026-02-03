@@ -1,30 +1,44 @@
 version: '3.7'
 
 services:
+  fitdashboard-db:
+    build: 
+      context: ./dbDocker
+    env_file: .env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./backups:/backups 
+      - postgres_persistance:/var/lib/postgresql/data
+    environment:
+      - TZ=America/Sao_Paulo
+
 
   django_fitdashboard:
     build: .
-    env_file:
-      - .env.prod
     command: sh -c "python manage.py migrate && python manage.py create_all_mv && python manage.py runserver 0.0.0.0:8000 & python manage.py consumer_delete_init"
+    env_file: .env
     environment:
-      - DB_ENGINE=django.db.backends.postgresql
+      - DB_HOST=fitdashboard-db
+      - DB_NAME=${POSTGRES_DB}
+      - DB_PASSWORD=${POSTGRES_PASSWORD}
+      - DB_USER=${POSTGRES_USER}
+      - DB_PORT=${DB_PORT}
+      - ACCESS_TIME=${ACCESS_TIME}
+      - REFRESH_TIME=${REFRESH_TIME}
+      - DEBUG=${DEBUG}
 
     ports:
       - 8002:8000
     volumes:
       - .:/fitDash
-    networks:
-      - gateway-shared-net
-      - rabbit-MQ-extern-network
+    depends_on:
+      fitdashboard-db:
+        condition: service_healthy
     
-    
-
-networks:
-  gateway-shared-net:
-    external: true
-  rabbit-MQ-extern-network:
-    external: true
 
 volumes:
   postgres_persistance:

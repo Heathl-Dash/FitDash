@@ -5,6 +5,7 @@ COPY requirements.txt ./
 RUN pip install -r requirements.txt
 COPY ./fitCore /app/fitCore
 COPY ./fitDash /app/fitDash
+COPY pyproject.toml .
 COPY manage.py /app/
 EXPOSE 8000
 RUN python manage.py makemigrations
