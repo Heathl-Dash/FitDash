@@ -19,18 +19,14 @@ jobs:
     - name: Configurar Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.9' 
+        python-version: '3.12' 
 
-    - name: Instalar Flake8 e Ruff
-      run: pip install flake8 ruff
-
-    - name: Executar Flake8 Lint
-      run: flake8 .
-      env:
-        FLAKE8_CONFIG: .flake8
+    - name: Checkout do código
+      uses: actions/checkout@v4
 
     - name: Executar Ruff Lint
       run: ruff check .
+
 
     - name: Configurar .env para CI
       run: |
