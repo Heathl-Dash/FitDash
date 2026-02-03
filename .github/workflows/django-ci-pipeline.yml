@@ -44,12 +44,6 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.POSTS_PASSWORD }}
 
 
-    - name: redes para o docker
-      run: |
-        docker network create gateway-shared-net
-        docker network create rabbit-MQ-extern-network || true
-
-
     - name: build docker
       run: docker compose up --build -d --wait
 
