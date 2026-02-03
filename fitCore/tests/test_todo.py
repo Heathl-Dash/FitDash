@@ -68,7 +68,6 @@ def test_todo_permission_unit():
     todo_user2 = ToDoFactory.build(user_id=2)
     current_user = Mock(id=1)
 
-
     def can_access(user, todo):
         return todo.user_id == user.id
 
@@ -78,7 +77,6 @@ def test_todo_permission_unit():
 
 @pytest.mark.django_db
 def test_return_none_for_unexistent_todo_unit():
-
     def get_todo(todo_id):
         todos = []
         return next((t for t in todos if t.id == todo_id), None)
@@ -90,7 +88,6 @@ def test_return_none_for_unexistent_todo_unit():
 def test_dont_permit_delete_todo_unit():
     todo_user2 = ToDoFactory.build(user_id=2)
     current_user = Mock(id=1)
-
 
     def can_delete(user, todo):
         return todo.user_id == user.id

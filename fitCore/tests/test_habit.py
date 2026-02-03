@@ -96,7 +96,6 @@ def test_habit_permission_unit():
     habit_user2 = HabitFactory.build(user_id=2)
     current_user = Mock(id=1)
 
-
     def can_access(user, habit):
         return habit.user_id == user.id
 
@@ -106,7 +105,6 @@ def test_habit_permission_unit():
 
 def test_habit_validation_unit():
     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
-
 
     def is_valid_habit(data):
         return data["positive"] or data["negative"]
