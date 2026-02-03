@@ -21,8 +21,8 @@ jobs:
       with:
         python-version: '3.12' 
 
-    - name: Checkout do código
-      uses: actions/checkout@v4
+    - name: Instalar Ruff
+      run: pip install ruff
 
     - name: Executar Ruff Lint
       run: ruff check .
