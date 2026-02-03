@@ -2,11 +2,9 @@ name: CI/CD com Django e PostgreSQL
 
 on:
   push:
-    branches:
-      - develop
+    branches: [develop]
   pull_request:
-    branches:
-      - develop
+    branches: [develop]
 
 jobs:
   build-and-test:
@@ -19,14 +17,13 @@ jobs:
     - name: Configurar Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.12' 
+        python-version: '3.12'
 
     - name: Instalar Ruff
       run: pip install ruff
 
     - name: Executar Ruff Lint
       run: ruff check .
-
 
     - name: Configurar .env para CI
       run: |
@@ -37,21 +34,13 @@ jobs:
         echo "ACCESS_TIME=3600" >> .env
         echo "REFRESH_TIME=86400" >> .env
         echo "DEBUG=True" >> .env
-      env:
-        POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-        POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-        POSTGRES_PASSWORD: ${{ secrets.POSTS_PASSWORD }}
 
-
-    - name: build docker
+    - name: Build e subir containers
       run: docker compose up --build -d --wait
 
     - name: Obter logs do DB se a inicialização falhou
       if: failure()
-      run: |
-        echo "Iniciando coleta de logs do fitdashboard-db..."
-        docker compose logs fitdashboard-db
-        echo "Coleta de logs concluída."
+      run: docker compose logs fitdashboard-db
 
     - name: Parar e remover Docker Compose
       if: always()
