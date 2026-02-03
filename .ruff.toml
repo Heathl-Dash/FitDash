@@ -1,0 +1,2 @@
+[tool.ruff.per-file-ignores]
+"fitDash/settings/__init__.py" = ["F403"]
