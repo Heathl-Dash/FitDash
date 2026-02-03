@@ -30,7 +30,9 @@ def test_create_habit_unit_simple():
 
 
 def test_edit_habit_unit(mock_user):
-    habit = HabitFactory.build(user_id=1, title="Antigo", description="Velho", positive=True, negative=False)
+    habit = HabitFactory.build(
+        user_id=1, title="Antigo", description="Velho", positive=True, negative=False
+    )
     updated_data = {
         "title": "Novo",
         "description": "Atualizado",
@@ -67,7 +69,9 @@ def test_list_habit_unit():
 
 
 def test_retrieve_habit_unit():
-    habit = HabitFactory.build(user_id=1, title="Ex", description="Desc", positive=True, negative=False)
+    habit = HabitFactory.build(
+        user_id=1, title="Ex", description="Desc", positive=True, negative=False
+    )
 
     def get_habit(habit_id):
         return habit if habit_id == 1 else None
@@ -80,8 +84,12 @@ def test_retrieve_habit_unit():
 
 
 def test_habit_counters_unit():
-    habit_positive = HabitFactory.build(user_id=1, positive=True, negative=False, positive_count=2)
-    habit_negative = HabitFactory.build(user_id=1, positive=False, negative=True, negative_count=3)
+    habit_positive = HabitFactory.build(
+        user_id=1, positive=True, negative=False, positive_count=2
+    )
+    habit_negative = HabitFactory.build(
+        user_id=1, positive=False, negative=True, negative_count=3
+    )
 
     if habit_positive.positive:
         habit_positive.positive_count += 1
@@ -104,12 +112,18 @@ def test_habit_permission_unit():
 
 
 def test_habit_validation_unit():
-    habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
+    habit_data = {
+        "title": "Teste",
+        "description": "Desc",
+        "positive": False,
+        "negative": False,
+    }
 
     def is_valid_habit(data):
         return data["positive"] or data["negative"]
 
     assert not is_valid_habit(habit_data)
+
 
 # @pytest.mark.django_db
 # def test_create_habit(auth_client):

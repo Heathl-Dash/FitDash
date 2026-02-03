@@ -26,7 +26,9 @@ def test_create_fitdata_unit(mock_get_user, mock_user):
     serializer = FitDataSerializer(data=data)
     assert serializer.is_valid(), serializer.errors
 
-    with patch("fitCore.serializers.fitdata_serializer.FitData.objects.update_or_create") as mock_update_or_create:
+    with patch(
+        "fitCore.serializers.fitdata_serializer.FitData.objects.update_or_create"
+    ) as mock_update_or_create:
         mock_instance = Mock(steps=8000, user_id=1)
         mock_update_or_create.return_value = (mock_instance, True)
 
@@ -45,7 +47,9 @@ def test_update_fitdata_unit(mock_get_user):
     fitdata = FitDataFactory.build(user_id=1, steps=5000, distance=3.5)
 
     with patch.object(fitdata, "save", return_value=None) as mock_save:
-        serializer = FitDataSerializer(fitdata, data={"steps": 7000, "distance": 5.0}, partial=True)
+        serializer = FitDataSerializer(
+            fitdata, data={"steps": 7000, "distance": 5.0}, partial=True
+        )
         assert serializer.is_valid(), serializer.errors
         instance = serializer.save()
 

@@ -6,11 +6,4 @@ from .fit_data import FitData
 from .fit_data_week import FitDataWeek
 
 
-__all__=[
-    Habit,
-    ToDo,
-    HabitSemana,
-    ToDoSemana,
-    FitData,
-    FitDataWeek
-]
+__all__ = [Habit, ToDo, HabitSemana, ToDoSemana, FitData, FitDataWeek]

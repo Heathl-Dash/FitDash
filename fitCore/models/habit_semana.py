@@ -10,4 +10,4 @@ class HabitSemana(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'habit_semana'
+        db_table = "habit_semana"

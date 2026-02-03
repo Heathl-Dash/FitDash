@@ -6,7 +6,9 @@ from unittest.mock import Mock, patch
 
 @pytest.mark.django_db
 def test_create_todo_unit():
-    todo = ToDoFactory.build(title="Comprar leite", description="Ir ao mercado", user_id=1)
+    todo = ToDoFactory.build(
+        title="Comprar leite", description="Ir ao mercado", user_id=1
+    )
 
     with patch.object(todo, "save", return_value=None):
         todo.save()
@@ -52,7 +54,9 @@ def test_list_todo_unit():
 
 @pytest.mark.django_db
 def test_retrieve_todo_unit():
-    todo = ToDoFactory.build(title="Comprar leite", description="Mercado", user_id=1, done=False)
+    todo = ToDoFactory.build(
+        title="Comprar leite", description="Mercado", user_id=1, done=False
+    )
 
     def get_todo(todo_id):
         return todo if todo_id == 1 else None
@@ -93,6 +97,7 @@ def test_dont_permit_delete_todo_unit():
         return todo.user_id == user.id
 
     assert not can_delete(current_user, todo_user2)
+
 
 # @pytest.mark.django_db
 # def test_create_todo(auth_client):

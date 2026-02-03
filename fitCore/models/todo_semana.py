@@ -9,4 +9,4 @@ class ToDoSemana(models.Model):
 
     class Meta:
         managed = False
-        db_table = 'todo_semana'
+        db_table = "todo_semana"

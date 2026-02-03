@@ -11,7 +11,11 @@ def auth_client():
 
     patcher = patch(
         "rest_framework_simplejwt.authentication.JWTAuthentication.get_validated_token",
-        return_value={"user_id": 1, "email": "teste@example.com", "token_type": "access"},
+        return_value={
+            "user_id": 1,
+            "email": "teste@example.com",
+            "token_type": "access",
+        },
     )
 
     patcher.start()
