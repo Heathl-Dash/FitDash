@@ -38,6 +38,11 @@ jobs:
         echo "REFRESH_TIME=86400" >> .env
         echo "DEBUG=True" >> .env
 
+    - name: redes para o docker
+      run: |
+        docker network create gateway-shared-net
+        docker network create rabbit-MQ-extern-network || true
+
     - name: Build e subir containers
       run: docker compose up --build -d --wait
 
