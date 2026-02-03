@@ -18,15 +18,14 @@ class FitDataViewSet(ModelViewSet):
         if obj.user_id != user.id:
             raise PermissionDenied("Você não tem permissão para editar essa tarefa!")
         return obj
-    
+
     def get_queryset(self):
         user=get_current_user()
         return FitData.objects.filter(user_id=user.id).order_by("fit_date")
-    
+
     @action(detail=False,methods=["GET"])
     def week(self,request, *args, **kwargs):
         user=get_current_user()
         queryset=FitDataWeek.objects.filter(user_id=user.id)
         serializer=FitDataWeekSerializer(queryset,many=True)
         return Response(serializer.data,status=status.HTTP_200_OK)
-

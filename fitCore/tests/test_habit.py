@@ -4,9 +4,11 @@ from factories import HabitFactory
 from fitCore.models import Habit
 from fitCore.serializers.habit_serializer import HabitSerializer
 
+
 @pytest.fixture
 def mock_user():
     return Mock(id=1)
+
 
 def test_create_habit_unit_simple():
     habit = HabitFactory.build(
@@ -14,7 +16,7 @@ def test_create_habit_unit_simple():
         description="Correr 5km",
         positive=True,
         negative=False,
-        user_id=1
+        user_id=1,
     )
 
     with patch.object(habit, "save", return_value=None):
@@ -25,6 +27,7 @@ def test_create_habit_unit_simple():
     assert habit.positive is True
     assert habit.negative is False
     assert habit.user_id == 1
+
 
 def test_edit_habit_unit(mock_user):
     habit = HabitFactory.build(user_id=1, title="Antigo", description="Velho", positive=True, negative=False)
@@ -50,6 +53,7 @@ def test_edit_habit_unit(mock_user):
 
 def test_list_habit_unit():
     habits = HabitFactory.build_batch(3, user_id=1)
+
     def list_habits_for_user(user_id):
         return habits
 
@@ -64,6 +68,7 @@ def test_list_habit_unit():
 
 def test_retrieve_habit_unit():
     habit = HabitFactory.build(user_id=1, title="Ex", description="Desc", positive=True, negative=False)
+
     def get_habit(habit_id):
         return habit if habit_id == 1 else None
 
@@ -91,6 +96,7 @@ def test_habit_permission_unit():
     habit_user2 = HabitFactory.build(user_id=2)
     current_user = Mock(id=1)
 
+
     def can_access(user, habit):
         return habit.user_id == user.id
 
@@ -100,6 +106,7 @@ def test_habit_permission_unit():
 
 def test_habit_validation_unit():
     habit_data = {"title": "Teste", "description": "Desc", "positive": False, "negative": False}
+
 
     def is_valid_habit(data):
         return data["positive"] or data["negative"]
@@ -143,7 +150,7 @@ def test_habit_validation_unit():
 #     }
 
 #     response = auth_client.patch(f"/api/v1/fit/habit/{habit.id}/", data=updated_data, format="json")
-    
+
 #     assert response.status_code == 200, response.content
 
 #     habit.refresh_from_db()
@@ -154,7 +161,7 @@ def test_habit_validation_unit():
 
 # @pytest.mark.django_db
 # def test_list_habit(auth_client):
-#     HabitFactory.create_batch(3, user_id=1)  
+#     HabitFactory.create_batch(3, user_id=1)
 
 #     response = auth_client.get("/api/v1/fit/habit/")
 

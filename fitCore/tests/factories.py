@@ -12,16 +12,18 @@ class ToDoFactory(factory.django.DjangoModelFactory):
         model = ToDo
 
     title = factory.Faker("word")
-    description = factory.Faker("sentence")  
+    description = factory.Faker("sentence")
     created = factory.LazyFunction(datetime.now)
+
 
 class HabitFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Habit
-    
+
     title = factory.Faker("word")
     description = factory.Faker("sentence")
     created = factory.LazyFunction(datetime.now)
+
     @factory.lazy_attribute
     def positive(self):
         return random.choice([True, False])
@@ -29,8 +31,10 @@ class HabitFactory(factory.django.DjangoModelFactory):
     @factory.lazy_attribute
     def negative(self):
         return False if self.positive else True
+
     positive_count = factory.Faker("random_int", min=0, max=100)
     negative_count = factory.Faker("random_int", min=0, max=100)
+
 
 class FitDataFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -38,5 +42,5 @@ class FitDataFactory(factory.django.DjangoModelFactory):
 
     fit_date = factory.LazyFunction(date.today)
     steps = factory.Faker("random_int", min=1000, max=15000)
-    distance = factory.LazyAttribute(lambda o: round(o.steps * 0.0008, 2)) 
+    distance = factory.LazyAttribute(lambda o: round(o.steps * 0.0008, 2))
     burned_calories = factory.LazyAttribute(lambda o: round(o.steps * 0.04, 2))

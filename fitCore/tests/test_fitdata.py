@@ -4,10 +4,12 @@ from factories import FitDataFactory
 from fitCore.models.fit_data import FitData
 from fitCore.serializers.fitdata_serializer import FitDataSerializer
 
-#Unitários
+
+# Unitários
 @pytest.fixture
 def mock_user():
     return Mock(id=1)
+
 
 @patch("fitCore.serializers.fitdata_serializer.get_current_user")
 def test_create_fitdata_unit(mock_get_user, mock_user):
@@ -34,6 +36,7 @@ def test_create_fitdata_unit(mock_get_user, mock_user):
     assert instance.steps == 8000
     assert instance.user_id == 1
 
+
 @patch("fitCore.serializers.fitdata_serializer.get_current_user")
 def test_update_fitdata_unit(mock_get_user):
     mock_user = Mock(id=1)
@@ -51,8 +54,10 @@ def test_update_fitdata_unit(mock_get_user):
     assert instance.distance == 5.0
     assert instance.user_id == 1
 
+
 def test_retrieve_fitdata_unit():
     fitdata = FitDataFactory.build(id=10, user_id=1)
+
     def get_fitdata_by_id(fitdata_id):
         return fitdata if fitdata.id == fitdata_id else None
 
@@ -61,10 +66,12 @@ def test_retrieve_fitdata_unit():
     assert retrieved.id == 10
     assert retrieved.user_id == 1
 
+
 def test_dont_permit_user_access_other_user_unit():
     """Testa que usuário não consegue acessar FitData de outro usuário."""
     fitdata = FitDataFactory.build(user_id=2)
     current_user = Mock(id=1)
+
 
     def can_user_access(user, obj):
         return obj.user_id == user.id
@@ -77,13 +84,14 @@ def test_dont_permit_user_update_other_user_unit():
     fitdata = FitDataFactory.build(user_id=2)
     current_user = Mock(id=1)
 
+
     def can_user_update(user, obj):
         return obj.user_id == user.id
 
     assert not can_user_update(current_user, fitdata)
 
 
-#Integração
+# Integração
 # @pytest.mark.django_db
 # def test_create_new_fitdata(auth_client):
 #     new_fitdata = FitDataFactory.build(user_id=1)
