@@ -1,8 +1,6 @@
 import pytest
 from unittest.mock import Mock, patch
 from factories import HabitFactory
-from fitCore.models import Habit
-from fitCore.serializers.habit_serializer import HabitSerializer
 
 
 @pytest.fixture

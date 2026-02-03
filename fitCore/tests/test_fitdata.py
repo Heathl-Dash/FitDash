@@ -1,7 +1,6 @@
 import pytest
 from unittest.mock import patch, Mock
 from factories import FitDataFactory
-from fitCore.models.fit_data import FitData
 from fitCore.serializers.fitdata_serializer import FitDataSerializer
 
 

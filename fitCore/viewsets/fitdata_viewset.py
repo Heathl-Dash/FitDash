@@ -1,6 +1,6 @@
 from ..serializers import FitDataSerializer, FitDataWeekSerializer
 from ..models import FitData, FitDataWeek
-from rest_framework.exceptions import PermissionDenied, ValidationError
+from rest_framework.exceptions import PermissionDenied
 from crum import get_current_user
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.decorators import action

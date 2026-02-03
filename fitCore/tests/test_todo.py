@@ -1,6 +1,5 @@
 import pytest
 from factories import ToDoFactory
-from fitCore.models import ToDo
 from unittest.mock import Mock, patch
 
 
