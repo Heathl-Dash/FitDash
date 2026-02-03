@@ -22,7 +22,10 @@ jobs:
     - name: Instalar Ruff
       run: pip install ruff
 
-    - name: Executar Ruff Lint
+    - name: Verificar formatação (Ruff Format)
+      run: ruff format --check .
+
+    - name: Verificar erros de lint (Ruff Check)
       run: ruff check .
 
     - name: Configurar .env para CI
