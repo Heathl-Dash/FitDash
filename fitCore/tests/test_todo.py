@@ -4,6 +4,7 @@ from unittest.mock import Mock, patch
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.mark.django_db
 def test_create_todo_unit():
     todo = ToDoFactory.build(

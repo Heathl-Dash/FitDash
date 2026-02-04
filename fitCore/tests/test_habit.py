@@ -4,6 +4,7 @@ from factories import HabitFactory
 
 pytestmark = pytest.mark.django_db
 
+
 @pytest.fixture
 def mock_user():
     return Mock(id=1)

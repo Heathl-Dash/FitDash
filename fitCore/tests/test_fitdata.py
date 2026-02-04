@@ -5,6 +5,7 @@ from fitCore.serializers.fitdata_serializer import FitDataSerializer
 
 pytestmark = pytest.mark.django_db
 
+
 # Unitários
 @pytest.fixture
 def mock_user():
