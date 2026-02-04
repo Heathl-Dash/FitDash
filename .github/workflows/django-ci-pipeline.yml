@@ -44,6 +44,9 @@ jobs:
     - name: Build e subir containers
       run: docker compose up --build -d --wait
 
+    - name: Rodar testes unitários (pytest)
+      run: docker compose exec -T django_fitdashboard pytest
+
     - name: Obter logs do DB se a inicialização falhou
       if: failure()
       run: docker compose logs fitdashboard-db
