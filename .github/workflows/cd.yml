@@ -9,7 +9,7 @@ permissions:
   contents: read
 
 env:
-  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/nutridash
+  IMAGE_NAME: ${{ secrets.DOCKERHUB_USERNAME }}/profile-spring
 
 jobs:
   build_and_deploy:
