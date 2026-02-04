@@ -1,10 +1,11 @@
 import pytest
-from rest_framework.test import APIClient
 from unittest.mock import patch
 
 
 @pytest.fixture
 def auth_client():
+    from rest_framework.test import APIClient
+
     client = APIClient()
 
     client.credentials(HTTP_AUTHORIZATION="Bearer fake-token")
