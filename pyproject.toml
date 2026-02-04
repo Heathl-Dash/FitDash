@@ -6,6 +6,10 @@ line-length = 88
 "fitDash/settings/*.py" = ["F401"]
 
 
-[pytest]
+[tool.pytest.ini_options]
 DJANGO_SETTINGS_MODULE = "fitDash.settings"
-python_files = "tests.py test_*.py *_tests.py"
+python_files = [
+    "tests.py",
+    "test_*.py",
+    "*_tests.py",
+]
