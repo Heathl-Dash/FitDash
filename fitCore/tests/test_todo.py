@@ -1,5 +1,7 @@
 import pytest
+
 pytestmark = pytest.mark.django_db
+
 from factories import ToDoFactory
 from unittest.mock import Mock, patch
 
