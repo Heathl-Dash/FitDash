@@ -1,10 +1,8 @@
 import pytest
-
-pytestmark = pytest.mark.django_db
-
 from factories import ToDoFactory
 from unittest.mock import Mock, patch
 
+pytestmark = pytest.mark.django_db
 
 @pytest.mark.django_db
 def test_create_todo_unit():

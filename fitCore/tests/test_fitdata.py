@@ -1,11 +1,9 @@
 import pytest
-
-pytestmark = pytest.mark.django_db
-
 from unittest.mock import patch, Mock
 from factories import FitDataFactory
 from fitCore.serializers.fitdata_serializer import FitDataSerializer
 
+pytestmark = pytest.mark.django_db
 
 # Unitários
 @pytest.fixture
