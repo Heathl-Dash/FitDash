@@ -1,4 +1,5 @@
 import pytest
+pytestmark = pytest.mark.django_db
 from unittest.mock import Mock, patch
 from factories import HabitFactory
 
